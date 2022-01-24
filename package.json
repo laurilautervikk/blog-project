@@ -5,10 +5,9 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "run": "",
-    "dev": "nodemon .",
-    "build": ""
-
+    "start": "nodemon ./src/server.ts",
+    "build": "npx tsc",
+    "deploy": "node build/server.js"
   },
   "repository": {
     "type": "git",
@@ -26,6 +25,10 @@
   },
   "homepage": "https://github.com/laurilautervikk/blog-project#readme",
   "dependencies": {
+    "@types/node": "^17.0.10",
     "typescript": "^4.5.5"
+  },
+  "devDependencies": {
+    "ts-node": "^10.4.0"
   }
 }
