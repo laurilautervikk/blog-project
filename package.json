@@ -1,0 +1,31 @@
+{
+  "name": "blog",
+  "version": "1.0.0",
+  "description": "A blog project with typescript",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "run": "",
+    "dev": "nodemon .",
+    "build": ""
+
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/laurilautervikk/blog-project.git"
+  },
+  "keywords": [
+    "typescript",
+    "nodejs",
+    "typeorm"
+  ],
+  "author": "LL",
+  "license": "GPL-3.0-or-later",
+  "bugs": {
+    "url": "https://github.com/laurilautervikk/blog-project/issues"
+  },
+  "homepage": "https://github.com/laurilautervikk/blog-project#readme",
+  "dependencies": {
+    "typescript": "^4.5.5"
+  }
+}
