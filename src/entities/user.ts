@@ -3,7 +3,8 @@ import {
   CreateDateColumn,
   Entity,
   PrimaryGeneratedColumn,
-  UpdateDateColumn
+  UpdateDateColumn,
+  getConnection
 } from 'typeorm';
 
 @Entity()
@@ -13,7 +14,7 @@ export class User {
   @Column('varchar', { length: 150 })
   firstName: string;
   @Column('varchar', { length: 150 })
-  midlleName: string;
+  middleName?: string;
   @Column('varchar', { length: 150 })
   lastName: string;
   @Column('varchar')
@@ -21,17 +22,19 @@ export class User {
   @Column('varchar', { length: 320, unique: true })
   email: string;
   @Column()
-  registeredAt: Date;
-  @Column()
+  createdAt: Date;
+  @Column({ default: () => 'CURRENT_TIMESTAMP' })
   lastLogin: Date;
   @Column('tinytext', { nullable: true })
-  intro: string;
+  intro?: string;
   @Column('text', { nullable: true })
-  profile: string;
-  @CreateDateColumn()
-  createdAt: Date;
+  profile?: string;
   @UpdateDateColumn()
   updatedAt: Date;
+
+  save() {
+    return getConnection().getRepository('User').save(this);
+  }
 }
 
 export default User;
