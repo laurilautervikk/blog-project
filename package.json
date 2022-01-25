@@ -4,7 +4,7 @@
   "description": "A blog project with typescript",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "start": "nodemon ./src/server.ts",
     "build": "npx tsc",
     "deploy": "node build/server.js"
@@ -25,14 +25,21 @@
   },
   "homepage": "https://github.com/laurilautervikk/blog-project#readme",
   "dependencies": {
+    "@babel/preset-env": "^7.16.11",
     "@types/express": "^4.17.13",
+    "@types/jest": "^27.4.0",
     "@types/node": "^17.0.10",
+    "@types/uuid": "^8.3.4",
+    "axios": "^0.25.0",
     "express": "^4.17.2",
     "mysql": "^2.18.1",
     "typeorm": "^0.2.41",
-    "typescript": "^4.5.5"
+    "typescript": "^4.5.5",
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
+    "@babel/preset-typescript": "^7.16.7",
+    "jest": "^27.4.7",
     "ts-node": "^10.4.0"
   }
 }

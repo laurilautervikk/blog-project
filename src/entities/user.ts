@@ -4,11 +4,12 @@ import {
   Entity,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
-  getConnection
+  getConnection,
+  BaseEntity
 } from 'typeorm';
 
 @Entity()
-export class User {
+export class User extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
   @Column('varchar', { length: 150 })
@@ -21,7 +22,7 @@ export class User {
   mobile: string;
   @Column('varchar', { length: 320, unique: true })
   email: string;
-  @Column()
+  @CreateDateColumn()
   createdAt: Date;
   @Column({ default: () => 'CURRENT_TIMESTAMP' })
   lastLogin: Date;

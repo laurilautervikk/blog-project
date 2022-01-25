@@ -1,25 +1,25 @@
 import express, { Request, Response } from 'express';
-import { getConnection, MissingDeleteDateColumnError } from 'typeorm';
 import User from '../../entities/user';
+import { v4 as uuidV4 } from 'uuid';
 const router = express.Router();
 
-/* interface UserInput {
+interface UserInput {
   firstName: string;
   middleName?: string;
   lastName: string;
   mobile: string;
   email: string;
-} */
+}
 
 router.post('/', async (req: Request, res: Response) => {
   try {
-    const { id } = req.params;
-    return res.send();
-
-    /* let { firstName, middleName, lastName, mobile, email } =
+    let { firstName, middleName, lastName, mobile, email } =
       req.body as UserInput;
 
+    //TODO: validation for inputs
+
     const user = new User();
+    user.id = uuidV4();
     user.firstName = firstName;
     user.middleName = middleName = !null ? middleName : '';
     user.lastName = lastName;
@@ -27,17 +27,24 @@ router.post('/', async (req: Request, res: Response) => {
     user.email = email;
 
     let newUser = await user.save();
-
     if (!newUser) {
       throw new Error();
     }
 
-    res.send(newUser); */
+    return res.send(newUser);
   } catch (error) {
-    res.send({ error: 'Cant create user', message: 'unknown error' });
-  }
+    if (error instanceof Error) {
+      return res.send({
+        error: 'Unable to create new user',
+        message: error.message
+      });
+    }
 
-  return;
+    return res.send({
+      error: 'Unable to create new user',
+      message: 'unknown error'
+    });
+  }
 });
 
 export default router;
