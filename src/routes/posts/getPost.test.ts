@@ -19,7 +19,7 @@ describe('get post by ID', () => {
     const data = response.data;
     console.log(data);
     expect(data).toHaveProperty('message');
-    expect(data?.message).toEqual('no user found with given ID');
+    expect(data?.message).toEqual('no post found with given ID');
     return;
   });
 

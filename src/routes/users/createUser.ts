@@ -33,6 +33,7 @@ router.post('/', async (req: Request, res: Response) => {
 
     return res.send(newUser);
   } catch (error) {
+    // TOTO: use better middleware as logger
     if (error instanceof Error) {
       return res.send({
         error: 'Unable to create new user',
