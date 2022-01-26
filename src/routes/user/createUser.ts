@@ -1,5 +1,5 @@
 import express, { Request, Response } from 'express';
-import User from '../../entities/user';
+import User from '../../entities/User';
 import { v4 as uuidV4 } from 'uuid';
 const router = express.Router();
 

@@ -1,5 +1,5 @@
 import express, { Request, Response } from 'express';
-import User from '../../entities/user';
+import User from '../../entities/User';
 const router = express.Router();
 
 // Find user by ID

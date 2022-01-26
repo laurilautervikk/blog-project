@@ -5,8 +5,10 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
   getConnection,
-  BaseEntity
+  BaseEntity,
+  OneToMany
 } from 'typeorm';
+import Post from './Post';
 
 @Entity()
 export class User extends BaseEntity {
@@ -33,9 +35,12 @@ export class User extends BaseEntity {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  save() {
-    return getConnection().getRepository('User').save(this);
-  }
+  @OneToMany(() => Post, (post) => post.author)
+  posts: Post[];
+
+  // save() {
+  //   return getConnection().getRepository('User').save(this);
+  // }
 }
 
 export default User;
