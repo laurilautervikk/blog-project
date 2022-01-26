@@ -11,7 +11,7 @@ import {
 import Post from './Post';
 
 @Entity()
-export class User extends BaseEntity {
+export default class User extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
   @Column('varchar', { length: 150 })
@@ -34,13 +34,15 @@ export class User extends BaseEntity {
   profile?: string;
   @UpdateDateColumn()
   updatedAt: Date;
-
   @OneToMany(() => Post, (post) => post.author)
   posts: Post[];
+
+  // @OneToMany(() => Post, (post) => post.author, {eager: true})//eager loading loads all associated entries
+  // posts: Post[];
 
   // save() {
   //   return getConnection().getRepository('User').save(this);
   // }
 }
 
-export default User;
+//export default User;

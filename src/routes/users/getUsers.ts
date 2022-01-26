@@ -8,14 +8,9 @@ router.get('/', async (req: Request, res: Response) => {
     //const { id } = req.params;
     const { skip, take } = req.query;
 
-    //update this from Jaanus repo
-    console.log({ skip: skip, take: take });
-    ///////////////
-
     const users = await User.find({
-      //update this from Jaanus repo
-      take: take ? Number.parseInt(take as string) : 20
-      ///////////////
+      take: Number.isSafeInteger(take) ? Number.parseInt(take as string) : 20,
+      skip: Number.isSafeInteger(skip) ? Number.parseInt(skip as string) : 0
     });
 
     if (!users) {

@@ -5,27 +5,25 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
-  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn
 } from 'typeorm';
 import User from './User';
 
 @Entity()
-export class Post extends BaseEntity {
+export default class Post extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
-  id: string;
-  //@ManyToOne(() => User, (User) => User.id)
-  @JoinColumn()
-  authorId: string;
+  id!: string;
   @Column('varchar', { length: 75 })
   title: string;
+  @JoinColumn()
+  authorId: string;
   @Column('varchar', { length: 100 })
   metaTitle: string;
   @Column('tinytext')
   summary: string;
-  @Column('varchar')
-  poblished: boolean;
+  @Column('boolean', { default: false })
+  published: boolean;
   @Column('text')
   content: string;
   @CreateDateColumn()
@@ -33,8 +31,8 @@ export class Post extends BaseEntity {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @OneToMany(() => User, (User) => User.posts)
-  author: Post[];
+  @ManyToOne(() => User, (user) => user.posts)
+  author: User;
 }
 
-export default Post;
+//export default Post;
