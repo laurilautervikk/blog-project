@@ -19,7 +19,7 @@ router.post('/', async (req: Request, res: Response) => {
     const user = await User.findOne({ id: authorId });
 
     if (!user) {
-      return res.send({ message: 'User not found' });
+      return res.json({ message: 'User not found' });
     }
 
     const post = Post.create({
@@ -38,23 +38,23 @@ router.post('/', async (req: Request, res: Response) => {
       // TOTO: use better middleware as logger
       console.log({ error: 'unable to create new post' });
       // TODO: need error handling middleware
-      return res.send({
+      return res.json({
         error: 'Unable to create new post',
         message: 'unknown error'
       });
     }
-    return res.send(newPost);
+    return res.json(newPost);
   } catch (error) {
     // TOTO: use better middleware as logger
     console.log('Database error');
     if (error instanceof Error) {
-      return res.send({
+      return res.json({
         error: 'Unable to create new post',
         message: error.message
       });
     }
 
-    return res.send({
+    return res.json({
       error: 'Unable to create new post',
       message: 'unknown error'
     });

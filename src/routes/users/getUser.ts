@@ -10,21 +10,21 @@ router.get('/:id', async (req: Request, res: Response) => {
     const user = await User.findOne({ id: id });
 
     if (!user) {
-      return res.send({
+      return res.json({
         message: 'no user found with given ID'
       });
     }
 
-    return res.send(user);
+    return res.json(user);
   } catch (error) {
     if (error instanceof Error) {
-      return res.send({
+      return res.json({
         error: 'Unable to find user',
         message: error.message
       });
     }
     // unknown (typeorm error?)
-    return res.send({
+    return res.json({
       error: 'Unable to create new user',
       message: 'unknown error'
     });

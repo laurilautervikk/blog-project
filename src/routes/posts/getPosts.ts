@@ -5,7 +5,7 @@ const router = express.Router();
 // Find user by ID
 router.get('/', async (req: Request, res: Response) => {
   try {
-    const { skip, take } = req.query;
+    const { userId, skip, take } = req.query;
 
     // const posts = await Post.find({
     //   take: Number.isSafeInteger(take) ? Number.parseInt(take as string) : 20,
@@ -18,25 +18,32 @@ router.get('/', async (req: Request, res: Response) => {
 
     //console.log(...posts); //spreading instead of looping
 
-    const postsForUser = await Post.createQueryBuilder('post')
+    const postsQuery = await Post.createQueryBuilder('post')
       .innerJoinAndSelect('post.author', 'author')
       .limit(Number.isSafeInteger(take) ? Number.parseInt(take as string) : 20)
-      .offset(Number.isSafeInteger(skip) ? Number.parseInt(skip as string) : 0)
-      .getRawMany();
+      .offset(Number.isSafeInteger(skip) ? Number.parseInt(skip as string) : 0);
 
-    res.send(postsForUser);
+    if (userId != undefined) {
+      postsQuery.where('author.id = :userId', { userId: userId });
+    }
+
+    const posts = await postsQuery.getMany();
+
+    return res.json(posts);
   } catch (error) {
-    // if (error instanceof Error) {
-    //   return res.send({
-    //     error: 'Unable to find post',
-    //     message: error.message
-    //   });
-    // }
-    // // unknown (typeorm error?)
-    // return res.send({
-    //   error: 'Unknown error: Unable find anything',
-    //   message: 'unknown error'
-    // });
+    // TOTO: use better middleware as logger
+    console.log('Database error');
+    if (error instanceof Error) {
+      return res.json({
+        error: 'Unable to find post',
+        message: error.message
+      });
+    }
+    // unknown (typeorm error?)
+    return res.json({
+      error: 'Unknown error: Unable find anything',
+      message: 'unknown error'
+    });
   }
 });
 
