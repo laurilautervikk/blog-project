@@ -1,7 +1,7 @@
 import express, { Request, Response } from 'express';
-import User from '../../entities/User';
-import { v4 as uuidV4 } from 'uuid';
 import Post from '../../entities/Post';
+import { v4 as uuidV4 } from 'uuid';
+import User from '../../entities/User';
 const router = express.Router();
 
 interface PostInput {
@@ -14,12 +14,16 @@ interface PostInput {
 router.post('/', async (req: Request, res: Response) => {
   try {
     const { authorId, title, summary, content } = req.body as PostInput;
-    // TODO: validate inputs
+
+    // validation näide
+    if (!authorId || !title || !summary || !content) {
+      return res.json({ error: 'all fields must be filled' });
+    }
+    // TODO: valideeri sijsonid (nt. sanitize ja validate)
 
     const user = await User.findOne({ id: authorId });
-
     if (!user) {
-      return res.json({ message: 'User not found' });
+      return res.json({ message: 'No such user found' });
     }
 
     const post = Post.create({
@@ -31,32 +35,30 @@ router.post('/', async (req: Request, res: Response) => {
       content: content,
       published: false
     });
-
+    console.log(post);
     const newPost = await post.save();
-
     if (!newPost) {
-      // TOTO: use better middleware as logger
-      console.log({ error: 'unable to create new post' });
-      // TODO: need error handling middleware
+      // TODO: parem logger vahevara kasutusele võtta
+      console.log({ error: 'unable to save post' });
+      // TODO: error handling vahevara luua (ühtlustada errori kuvamine)
       return res.json({
         error: 'Unable to create new post',
-        message: 'unknown error'
+        message: 'typeorm save'
       });
     }
+
     return res.json(newPost);
   } catch (error) {
-    // TOTO: use better middleware as logger
-    console.log('Database error');
+    console.log('Unknown databse error');
     if (error instanceof Error) {
       return res.json({
         error: 'Unable to create new post',
         message: error.message
       });
     }
-
     return res.json({
       error: 'Unable to create new post',
-      message: 'unknown error'
+      message: 'Unknown error'
     });
   }
 });

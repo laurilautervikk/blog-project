@@ -1,23 +1,26 @@
 import {
   BaseEntity,
+  PrimaryGeneratedColumn,
+  ManyToOne,
   Column,
   CreateDateColumn,
+  UpdateDateColumn,
   Entity,
-  JoinColumn,
-  ManyToOne,
-  PrimaryGeneratedColumn,
-  UpdateDateColumn
+  OneToMany
 } from 'typeorm';
+import Post_comment from './Post_comment';
 import User from './User';
 
-@Entity()
+@Entity({ name: 'Post' })
 export default class Post extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   id!: string;
   @Column('varchar', { length: 75 })
   title: string;
   @Column()
-  authorId: string;
+  authorId!: string;
+  @Column()
+  parentId!: string;
   @Column('varchar', { length: 100 })
   metaTitle?: string;
   @Column('tinytext')
@@ -35,6 +38,13 @@ export default class Post extends BaseEntity {
     createForeignKeyConstraints: true
   })
   author: Promise<User>;
-}
 
-//export default Post;
+  // Parent post
+  @ManyToOne(() => Post, (post) => post.parentId, {
+    createForeignKeyConstraints: true
+  })
+  parentPost: Promise<User>;
+
+  @OneToMany(() => Post_comment, (post_comment) => post_comment.postId)
+  post_comment: Post_comment[];
+}
