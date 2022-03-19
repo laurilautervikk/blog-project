@@ -11,7 +11,7 @@ import {
 import Post_comment from './Post_comment';
 import User from './User';
 
-@Entity({ name: 'Post' })
+@Entity()
 export default class Post extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   id!: string;

@@ -9,7 +9,7 @@ import {
 } from 'typeorm';
 import Post from './Post';
 
-@Entity({ name: 'Post_comment' })
+@Entity()
 export default class Post_comment extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   id!: string;

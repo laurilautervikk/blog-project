@@ -1,7 +1,6 @@
 {
   "type": "mysql",
   "database": "blog",
-  "entities": ["src/entities/*.ts"],
-  "synchronize": true,
-  "migrationsRun": false
+  "entities": ["./src/entities/*.ts"],
+  "synchronize": true
 }
