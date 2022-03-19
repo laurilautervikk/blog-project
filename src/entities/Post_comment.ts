@@ -5,7 +5,8 @@ import {
   Column,
   CreateDateColumn,
   UpdateDateColumn,
-  Entity
+  Entity,
+  OneToMany
 } from 'typeorm';
 import Post from './Post';
 
@@ -41,7 +42,7 @@ export default class Post_comment extends BaseEntity {
   post: Promise<Post>;
 
   // Parent post_comment
-  @ManyToOne(() => Post_comment, (post_comment) => post_comment.parentId, {
+  @OneToMany(() => Post_comment, (post_comment) => post_comment.parentId, {
     createForeignKeyConstraints: true
   })
   parentPost_comment: Promise<Post>;

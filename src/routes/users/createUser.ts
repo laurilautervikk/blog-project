@@ -16,7 +16,7 @@ router.post('/', async (req: Request, res: Response) => {
     let { firstName, middleName, lastName, mobile, email } =
       req.body as UserInput;
 
-    //TODO: validation for inputs
+    //TODO: validation form inputs
 
     const user = new User();
     user.id = uuidV4();
