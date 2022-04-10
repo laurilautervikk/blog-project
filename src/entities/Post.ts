@@ -27,7 +27,7 @@ export default class Post extends BaseEntity {
   @Column()
   authorId!: string;
 
-  @Column()
+  @Column('varchar', { default: 'dummy' })
   parentId!: string;
 
   @Column('varchar', { length: 100 })

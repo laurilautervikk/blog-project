@@ -23,7 +23,6 @@ router.get('/:id', async (req: Request, res: Response) => {
         message: error.message
       });
     }
-    // unknown (typeorm error?)
     return res.json({
       error: 'Unable to create new user',
       message: 'unknown error'

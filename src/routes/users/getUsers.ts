@@ -15,15 +15,16 @@ router.get('/', async (req: Request, res: Response) => {
 
     if (!users) {
       return res.json({
-        message: 'no user found with given ID'
+        message: 'no user found'
       });
     }
 
+    //console.log('users', users);
     return res.json(users);
   } catch (error) {
     if (error instanceof Error) {
       return res.json({
-        error: 'Unable to find user',
+        error: 'Unable to find any users',
         message: error.message
       });
     }
