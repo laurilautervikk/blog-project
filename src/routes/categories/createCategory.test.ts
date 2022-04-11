@@ -1,6 +1,6 @@
 import axios from 'axios';
 const endpoint = 'http://localhost:3000/posts/';
-
+//category
 describe('create a post', () => {
   it('it should create a new post successfully', async () => {
     const testData = {

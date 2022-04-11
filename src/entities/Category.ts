@@ -14,7 +14,7 @@ export default class Category extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   id!: string;
 
-  @Column()
+  @Column('varchar', { default: 'dummy' })
   parentId!: string;
 
   @Column('varchar', { length: 75 })

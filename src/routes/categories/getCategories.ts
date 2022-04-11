@@ -1,41 +1,29 @@
 import express, { Request, Response } from 'express';
-import Post from '../../entities/Post';
+import Category from '../../entities/Category';
 const router = express.Router();
 
 // Find user by ID
 router.get('/', async (req: Request, res: Response) => {
   try {
-    const { userId, skip, take } = req.query;
+    const { id, skip, take } = req.query;
 
-    // const posts = await Post.find({
-    //   take: Number.isSafeInteger(take) ? Number.parseInt(take as string) : 20,
-    //   skip: Number.isSafeInteger(skip) ? Number.parseInt(skip as string) : 0,
-    //   relations: ['author'],
-    //   order: {
-    //     createdAt: 'DESC'
-    //   }
-    // });
-
-    //console.log(...posts); //spreading instead of looping
-
-    const postsQuery = await Post.createQueryBuilder('post')
-      .innerJoinAndSelect('post.author', 'author')
+    const categoryQuery = await Category.createQueryBuilder('category')
       .limit(Number.isSafeInteger(take) ? Number.parseInt(take as string) : 20)
       .offset(Number.isSafeInteger(skip) ? Number.parseInt(skip as string) : 0);
 
-    if (userId != undefined) {
-      postsQuery.where('author.id = :userId', { userId: userId });
-    }
+    /* if (id != undefined) {
+      categoryQuery.where('id = :id', { id: id });
+    } */
 
-    const posts = await postsQuery.getMany();
+    const categories = await categoryQuery.getMany();
 
-    return res.json(posts);
+    return res.json(categories);
   } catch (error) {
     // TOTO: use better middleware as logger
     console.log('Database error');
     if (error instanceof Error) {
       return res.json({
-        error: 'Unable to find post',
+        error: 'Unable to find categories',
         message: error.message
       });
     }

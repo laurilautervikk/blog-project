@@ -1,45 +1,44 @@
 import express, { Request, Response } from 'express';
-import Post from '../../entities/Post';
+import Category from '../../entities/Category';
 import { v4 as uuidV4 } from 'uuid';
-import User from '../../entities/User';
+//import User from '../../entities/User';
 const router = express.Router();
 
-interface PostInput {
-  authorId: string;
+interface CategoryInput {
   title: string;
-  summary: string;
+  slug: string;
   content: string;
 }
 
 router.post('/', async (req: Request, res: Response) => {
   try {
-    const { authorId, title, summary, content } = req.body as PostInput;
+    const { title, slug, content } = req.body as CategoryInput;
     console.log('request', req.body);
 
     // validation näide
-    if (!authorId || !title || !summary || !content) {
+    if (!title || !slug || !content) {
       //if (!authorId) {
       return res.json({ error: 'all fields must be filled' });
     }
     // TODO: valideeri sijsonid (nt. sanitize ja validate)
 
-    const user = await User.findOne({ id: authorId });
-    if (!user) {
-      return res.json({ message: 'No such user found' });
+    const titleCheck = await Category.findOne({ title: title });
+    if (!title) {
+      return res.json({
+        message: 'There is no category with this title already: ' + titleCheck
+      });
     }
 
-    const post = Post.create({
+    const category = Category.create({
       id: uuidV4(),
-      authorId: user.id,
       title: title,
       metaTitle: title.replace(/\s/g, '-'),
-      summary: summary,
-      content: content,
-      published: false
+      slug: slug,
+      content: content
     });
-    console.log(post);
-    const newPost = await post.save();
-    if (!newPost) {
+    console.log(category);
+    const newCategory = await category.save();
+    if (!newCategory) {
       // TODO: parem logger vahevara kasutusele võtta
       console.log({ error: 'unable to save post' });
       // TODO: error handling vahevara luua (ühtlustada errori kuvamine)
@@ -49,7 +48,7 @@ router.post('/', async (req: Request, res: Response) => {
       });
     }
 
-    return res.json(newPost);
+    return res.json(newCategory);
   } catch (error) {
     console.log('Unknown databse error');
     if (error instanceof Error) {
