@@ -18,5 +18,6 @@ var userRoutes: string[] = [];
 console.log(userRoutes.toString());
 router.use('/users', [createUser, getUser, getUsers, deleteUser]);
 router.use('/posts', [createPost, getPost, getPosts, deletePost]);
+//add some here
 
 export default router;
