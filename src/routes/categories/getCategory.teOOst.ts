@@ -1,17 +1,19 @@
 import axios from 'axios';
+import { response } from '../../app';
+import getCategories from './getCategory';
 
-const endpoint = 'http://localhost:3000/posts/';
+const endpoint = 'http://localhost:3000/categories/';
 
-describe('get post by ID', () => {
+describe('getCategories', () => {
   beforeAll(() => {
     // käivitatakse enne testi paki algust (nt. tee test andmebaasi ja täida see)
   });
-  it('should return post by ID', async () => {
+  it('should return category by ID', async () => {
     const response = await axios.get(
-      endpoint + '/4c4a2617-bca8-460f-ab67-a692bb4cc553'
+      endpoint + '/bbc8b538-8f52-4548-96f3-0348441965d7'
     );
     expect(response?.data).toHaveProperty('id');
-    expect(response?.data?.title).toEqual('Title for a random post');
+    expect(response?.data?.title).toEqual('Title for a random category');
   });
 
   it('Should return error for non existing ID', async () => {
@@ -19,7 +21,7 @@ describe('get post by ID', () => {
     const data = response.data;
     console.log(data);
     expect(data).toHaveProperty('message');
-    expect(data?.message).toEqual('no post found with given ID');
+    expect(data?.message).toEqual('no category found with given ID');
     return;
   });
 

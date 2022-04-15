@@ -1,30 +1,30 @@
 import express, { Request, Response } from 'express';
-import Post from '../../entities/Post';
+import Category from '../../entities/Category';
 const router = express.Router();
 
-//find post by id
+//find category by id
 router.get('/:id', async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
 
-    const post = await Post.findOne({ id: id });
+    const category = await Category.findOne({ id: id });
 
-    if (!post) {
+    if (!category) {
       return res.json({
         message: 'no post found with given ID'
       });
     }
-    return res.json(post);
+    return res.json(category);
   } catch (error) {
     if (error instanceof Error) {
       return res.json({
-        error: 'Unable to find user',
+        error: 'Unable to find category',
         message: error.message
       });
     }
     // unknown (typeorm error?)
     return res.json({
-      error: 'Unable to create new user',
+      error: 'Unable to find anything',
       message: 'unknown error'
     });
   }

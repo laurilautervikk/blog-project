@@ -7,24 +7,24 @@ router.delete('/:id', async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
 
-    const post = await Post.delete({ id: id });
+    const deleted = await Post.delete({ id: id });
 
-    if (!post) {
-      return res.json({
-        message: 'no post found with given ID'
+    if (!deleted) {
+      return res.status(404).json({
+        message: 'no post found with ID: ' + id
       });
     }
-    console.log('Successfully deleted Post ID: ' + id);
-    return res.send('Successfully deleted Post ID: ' + id);
+    console.log(deleted);
+    return res.status(200).json(deleted);
   } catch (error) {
     if (error instanceof Error) {
-      return res.json({
+      return res.status(404).json({
         error: 'Unable to find post',
         message: error.message
       });
     }
     // unknown (typeorm error?)
-    return res.json({
+    return res.status(400).json({
       error: 'Unable to delete',
       message: 'unknown error'
     });

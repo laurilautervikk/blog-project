@@ -7,18 +7,7 @@ router.get('/', async (req: Request, res: Response) => {
   try {
     const { userId, skip, take } = req.query;
 
-    // const posts = await Post.find({
-    //   take: Number.isSafeInteger(take) ? Number.parseInt(take as string) : 20,
-    //   skip: Number.isSafeInteger(skip) ? Number.parseInt(skip as string) : 0,
-    //   relations: ['author'],
-    //   order: {
-    //     createdAt: 'DESC'
-    //   }
-    // });
-
-    //console.log(...posts); //spreading instead of looping
-
-    const postsQuery = await Post.createQueryBuilder('post')
+    const postsQuery = Post.createQueryBuilder('post')
       .innerJoinAndSelect('post.author', 'author')
       .limit(Number.isSafeInteger(take) ? Number.parseInt(take as string) : 20)
       .offset(Number.isSafeInteger(skip) ? Number.parseInt(skip as string) : 0);

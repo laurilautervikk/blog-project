@@ -1,7 +1,6 @@
 import express, { Request, Response } from 'express';
 import Category from '../../entities/Category';
 import { v4 as uuidV4 } from 'uuid';
-//import User from '../../entities/User';
 const router = express.Router();
 
 interface CategoryInput {

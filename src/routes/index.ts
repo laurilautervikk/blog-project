@@ -9,8 +9,9 @@ import getPosts from './posts/getPosts';
 import createPost from './posts/createPost';
 import deletePost from './posts/deletePost';
 import createCategory from './categories/createCategory';
-
+import getCategory from './categories/getCategory';
 import getCategories from './categories/getCategories';
+import deleteCategory from './categories/deleteCategory';
 const router = express.Router();
 var userRoutes: string[] = [];
 
@@ -23,9 +24,9 @@ router.use('/users', [createUser, getUser, getUsers, deleteUser]);
 router.use('/posts', [createPost, getPost, getPosts, deletePost]);
 router.use('/categories', [
   createCategory,
-  //getCategory,
-  getCategories
-  //deleteCategory
+  getCategory,
+  getCategories,
+  deleteCategory
 ]);
 // router.use('/comments', [
 //   createComment,
