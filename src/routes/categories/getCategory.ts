@@ -11,10 +11,10 @@ router.get('/:id', async (req: Request, res: Response) => {
 
     if (!category) {
       return res.json({
-        message: 'no post found with given ID'
+        message: 'no category found with ID: ' + id
       });
     }
-    return res.json(category);
+    return res.status(200).json(category);
   } catch (error) {
     if (error instanceof Error) {
       return res.json({
@@ -23,7 +23,7 @@ router.get('/:id', async (req: Request, res: Response) => {
       });
     }
     // unknown (typeorm error?)
-    return res.json({
+    return res.status(400).json({
       error: 'Unable to find anything',
       message: 'unknown error'
     });

@@ -1,12 +1,14 @@
 import axios from 'axios';
 const endpoint = 'http://localhost:3000/categories/';
-//category
+
 describe('create a category', () => {
+  let newId: String;
+
   it('it should create a new category successfully', async () => {
     const testData = {
-      title: 'Cathegory Title',
-      slug: 'slug2233',
-      content: 'Content here223'
+      title: 'Title createcategory test',
+      slug: 'Slug createcategory test',
+      content: 'Content createcategory test'
     };
 
     const response = await axios.post(endpoint, testData, {
@@ -17,10 +19,17 @@ describe('create a category', () => {
 
     const responseData = response.data;
 
+    newId = responseData.id;
+
     expect(responseData.title).toEqual(testData.title);
-    expect(responseData.slug).toEqual(testData.slug);
     expect(responseData.content).toEqual(testData.content);
+    expect(responseData.slug).toEqual(testData.slug);
 
     return;
+  });
+
+  afterAll(async () => {
+    // clean up thest category
+    const response = await axios.delete(endpoint + newId);
   });
 });

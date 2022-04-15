@@ -7,15 +7,15 @@ router.delete('/:id', async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
 
-    const category = await Category.delete({ id: id });
+    const deleted = await Category.delete({ id: id });
 
-    if (!category) {
-      return res.json({
-        message: 'no category found with given ID'
+    if (!deleted) {
+      return res.status(404).json({
+        message: 'no category found with given ID: ' + id
       });
     }
-    console.log('Successfully deleted category ID: ' + id);
-    return res.send('Successfully deleted category ID: ' + id);
+
+    return res.status(200).json(deleted);
   } catch (error) {
     if (error instanceof Error) {
       return res.json({

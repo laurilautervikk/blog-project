@@ -11,10 +11,6 @@ router.get('/', async (req: Request, res: Response) => {
       .limit(Number.isSafeInteger(take) ? Number.parseInt(take as string) : 20)
       .offset(Number.isSafeInteger(skip) ? Number.parseInt(skip as string) : 0);
 
-    /* if (id != undefined) {
-      categoryQuery.where('id = :id', { id: id });
-    } */
-
     const categories = await categoryQuery.getMany();
 
     return res.json(categories);

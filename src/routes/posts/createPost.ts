@@ -21,7 +21,7 @@ router.post('/', async (req: Request, res: Response) => {
       //if (!authorId) {
       return res.json({ error: 'all fields must be filled' });
     }
-    // TODO: valideeri sijsonid (nt. sanitize ja validate)
+    // TODO: valideeri jsonid (nt. sanitize ja validate)
 
     const user = await User.findOne({ id: authorId });
     if (!user) {
