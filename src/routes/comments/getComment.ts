@@ -1,5 +1,5 @@
 import express, { Request, Response } from 'express';
-import Post from '../../entities/Post';
+import Post_comment from '../../entities/Post_comment';
 const router = express.Router();
 
 //find post by id
@@ -7,24 +7,24 @@ router.get('/:id', async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
 
-    const post = await Post.findOne({ id: id });
+    const comment = await Post_comment.findOne({ id: id });
 
-    if (!post) {
+    if (!comment) {
       return res.json({
-        message: 'no post found with given ID'
+        message: 'no comment found with ID: ' + id
       });
     }
-    return res.json(post);
+    return res.json(comment);
   } catch (error) {
     if (error instanceof Error) {
       return res.json({
-        error: 'Unable to find user',
+        error: 'Unable to find category',
         message: error.message
       });
     }
     // unknown (typeorm error?)
     return res.json({
-      error: 'Unable to create new user',
+      error: 'Unable to find category',
       message: 'unknown error'
     });
   }

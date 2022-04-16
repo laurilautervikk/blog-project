@@ -1,16 +1,16 @@
 import axios from 'axios';
-const endpoint = 'http://localhost:3000/categories/';
+const endpoint = 'http://localhost:3000/comments/';
 
-describe('delete category by ID', () => {
+describe('delete comment by ID', () => {
   //empty var to hold id from a response
   let newId: string;
 
   beforeAll(async () => {
     //create test data
     const data = {
-      title: 'Test title',
-      slug: 'Test summary',
-      content: 'Test content'
+      postId: 'df2c15c1-7c3c-428d-86db-bad0a73741e9',
+      title: 'Title deletecomment test',
+      content: 'Content deletecomment test'
     };
 
     //insert test data
@@ -24,7 +24,7 @@ describe('delete category by ID', () => {
     return response.data;
   });
 
-  it('should delete category by ID and return "affected: 1"', async () => {
+  it('should delete comment by ID and return "affected: 1"', async () => {
     let response = await axios.delete(endpoint + newId);
     expect(response.status).toBe(200);
     expect(response.data.affected).toBe(1);

@@ -1,31 +1,36 @@
 import express, { Request, Response } from 'express';
-import Category from '../../entities/Category';
+import Post_comment from '../../entities/Post_comment';
 const router = express.Router();
 
 // Find user by ID
 router.get('/', async (req: Request, res: Response) => {
   try {
-    const { id, skip, take } = req.query;
+    const { postId, skip, take } = req.query;
 
-    const categoriesQuery = await Category.createQueryBuilder('category')
+    const commentsQuery = await Post_comment.createQueryBuilder('comment')
+      .innerJoinAndSelect('comment.post', 'post')
       .limit(Number.isSafeInteger(take) ? Number.parseInt(take as string) : 20)
       .offset(Number.isSafeInteger(skip) ? Number.parseInt(skip as string) : 0);
 
-    const categories = await categoriesQuery.getMany();
+    if (postId != undefined) {
+      commentsQuery.where('post.id = :postId', { postId: postId });
+    }
 
-    return res.json(categories);
+    const comments = await commentsQuery.getMany();
+
+    return res.json(comments);
   } catch (error) {
     // TOTO: use better middleware as logger
     console.log('Database error');
     if (error instanceof Error) {
       return res.json({
-        error: 'Unable to find categories',
+        error: 'Unable to find comment',
         message: error.message
       });
     }
     // unknown (typeorm error?)
     return res.json({
-      error: 'Unknown error: Unable find anything',
+      error: 'Unable find anything',
       message: 'unknown error'
     });
   }

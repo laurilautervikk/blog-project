@@ -10,12 +10,11 @@ router.delete('/:id', async (req: Request, res: Response) => {
     const user = await User.delete({ id: id });
 
     if (!user) {
-      return res.json({
-        message: 'no user found with given ID'
+      return res.status(404).json({
+        message: 'no user found with given ID: ' + id
       });
     }
-    console.log('Successfully deleted user ID: ' + id);
-    return res.json('Successfully deleted user ID: ' + id);
+    return res.status(200).json(user);
   } catch (error) {
     if (error instanceof Error) {
       return res.json({

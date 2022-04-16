@@ -1,18 +1,19 @@
 import express, { Request, Response } from 'express';
-import Category from '../../entities/Category';
+import Tag from '../../entities/Tag';
 import { v4 as uuidV4 } from 'uuid';
 const router = express.Router();
 
-interface CategoryInput {
+interface TagInput {
   title: string;
+  metaTitle: string;
   slug: string;
   content: string;
 }
 
 router.post('/', async (req: Request, res: Response) => {
   try {
-    const { title, slug, content } = req.body as CategoryInput;
-    console.log('request', req.body);
+    const { title, slug, content } = req.body as TagInput;
+    //console.log('request', req.body);
 
     // validation näide
     if (!title || !slug || !content) {
@@ -21,44 +22,43 @@ router.post('/', async (req: Request, res: Response) => {
     }
     // TODO: valideeri jsonid (nt. sanitize ja validate)
 
-    const titleCheck = await Category.findOne({ title: title });
+    const titleCheck = await Tag.findOne({ title: title });
     if (titleCheck) {
       return res.json({
-        message:
-          'There is a category with this title already: ' + titleCheck.title
+        message: 'There is a tag with this title already: ' + titleCheck.title
       });
     }
 
-    const category = Category.create({
+    const tag = Tag.create({
       id: uuidV4(),
       title: title,
       metaTitle: title.replace(/\s/g, '-'),
       slug: slug,
       content: content
     });
-    console.log(category);
-    const newCategory = await category.save();
-    if (!newCategory) {
+    //console.log(tag);
+    const newTag = await tag.save();
+    if (!newTag) {
       // TODO: parem logger vahevara kasutusele võtta
-      console.log({ error: 'unable to save post' });
+      console.log({ error: 'unable to save tag' });
       // TODO: error handling vahevara luua (ühtlustada errori kuvamine)
       return res.json({
-        error: 'Unable to create new post',
+        error: 'Unable to create new tag',
         message: 'typeorm save'
       });
     }
 
-    return res.json(newCategory);
+    return res.json(newTag);
   } catch (error) {
     console.log('Unknown databse error');
     if (error instanceof Error) {
       return res.json({
-        error: 'Unable to create new post',
+        error: 'Unable to create new tag',
         message: error.message
       });
     }
     return res.json({
-      error: 'Unable to create new post',
+      error: 'Unable to create new tag',
       message: 'Unknown error'
     });
   }

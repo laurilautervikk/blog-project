@@ -1,14 +1,14 @@
 import axios from 'axios';
-const endpoint = 'http://localhost:3000/categories/';
+const endpoint = 'http://localhost:3000/tags/';
 
-describe('create a category', () => {
+describe('create a tag', () => {
   let newId: string;
 
-  it('it should create a new category successfully', async () => {
+  it('it should create a new tag successfully', async () => {
     const testData = {
-      title: 'Title createcategory test',
-      slug: 'Slug createcategory test',
-      content: 'Content createcategory test'
+      title: 'Title createtag test',
+      slug: 'Slug createtag test',
+      content: 'Content createtag test'
     };
 
     const response = await axios.post(endpoint, testData, {
@@ -29,7 +29,7 @@ describe('create a category', () => {
   });
 
   afterAll(async () => {
-    // clean up thest category
+    // clean up thest tag
     const response = await axios.delete(endpoint + newId);
   });
 });

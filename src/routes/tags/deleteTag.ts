@@ -1,25 +1,25 @@
 import express, { Request, Response } from 'express';
-import Post from '../../entities/Post';
+import Tag from '../../entities/Tag';
 const router = express.Router();
 
-//find post by id
+//find Tag by id
 router.delete('/:id', async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
 
-    const post = await Post.delete({ id: id });
+    const deleted = await Tag.delete({ id: id });
 
-    if (!post) {
-      return res.json({
-        message: 'no post found with given ID'
+    if (!deleted) {
+      return res.status(404).json({
+        message: 'no Tag found with given ID: ' + id
       });
     }
-    console.log('Successfully deleted Post ID: ' + id);
-    return res.send('Successfully deleted Post ID: ' + id);
+
+    return res.status(200).json(deleted);
   } catch (error) {
     if (error instanceof Error) {
       return res.json({
-        error: 'Unable to find post',
+        error: 'Unable to find Tag',
         message: error.message
       });
     }

@@ -10,7 +10,7 @@ router.delete('/:id', async (req: Request, res: Response) => {
     const deleted = await Post.delete({ id: id });
 
     if (!deleted) {
-      return res.status(404).json({
+      return res.json({
         message: 'no post found with ID: ' + id
       });
     }

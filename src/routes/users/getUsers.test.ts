@@ -1,15 +1,16 @@
 import axios from 'axios';
-const endpoint = 'http://localhost:3000/categories/';
+const endpoint = 'http://localhost:3000/users/';
 
-describe('get post by ID', () => {
+describe('get users by ID', () => {
   let newId: string;
 
   beforeAll(async () => {
-    //create a dummy post first
+    //create a dummy entry first
     const testData = {
-      title: 'Title getcategories test',
-      slug: 'Summary getcategories test',
-      content: 'Content getcategories test'
+      firstName: 'Testa',
+      lastName: 'Usaar',
+      mobile: '+377789789789',
+      email: 'test@user.com'
     };
 
     const response = await axios.post(endpoint, testData, {
@@ -24,13 +25,13 @@ describe('get post by ID', () => {
     newId = responseData.id;
   });
 
-  it('should return the categories created above', async () => {
+  it('should return the users created above', async () => {
     const response = await axios.get(endpoint);
     //console.log(response.data[0].title);
 
     //seting a delay because other tests may have not cleaned all data yet
     const delay = setTimeout(function () {
-      expect(response?.data[0]?.title).toEqual('Title getcategories test');
+      expect(response?.data[0]?.firstName).toEqual('Testa');
     }, 1000);
     delay.unref();
   });

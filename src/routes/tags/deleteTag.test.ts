@@ -1,7 +1,7 @@
 import axios from 'axios';
-const endpoint = 'http://localhost:3000/categories/';
+const endpoint = 'http://localhost:3000/tags/';
 
-describe('delete category by ID', () => {
+describe('delete tag by ID', () => {
   //empty var to hold id from a response
   let newId: string;
 
@@ -24,7 +24,7 @@ describe('delete category by ID', () => {
     return response.data;
   });
 
-  it('should delete category by ID and return "affected: 1"', async () => {
+  it('should delete tag by ID and return "affected: 1"', async () => {
     let response = await axios.delete(endpoint + newId);
     expect(response.status).toBe(200);
     expect(response.data.affected).toBe(1);

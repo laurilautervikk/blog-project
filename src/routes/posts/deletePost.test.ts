@@ -34,7 +34,6 @@ describe('delete post by ID', () => {
   it('Should not find id and return "affected: 0"', async () => {
     let wrongId = 'nothing';
     let response = await axios.delete(endpoint + wrongId);
-    expect(response.status).toBe(200);
     expect(response.data.affected).toBe(0);
   });
 

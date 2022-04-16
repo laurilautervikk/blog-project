@@ -1,14 +1,14 @@
 import axios from 'axios';
-const endpoint = 'http://localhost:3000/categories/';
+const endpoint = 'http://localhost:3000/comments/';
 
 describe('create a category', () => {
   let newId: string;
 
-  it('it should create a new category successfully', async () => {
+  it('it should create a new comment successfully', async () => {
     const testData = {
-      title: 'Title createcategory test',
-      slug: 'Slug createcategory test',
-      content: 'Content createcategory test'
+      postId: 'df2c15c1-7c3c-428d-86db-bad0a73741e9',
+      title: 'Title createcomment test',
+      content: 'Content createcomment test'
     };
 
     const response = await axios.post(endpoint, testData, {
@@ -23,7 +23,6 @@ describe('create a category', () => {
 
     expect(responseData.title).toEqual(testData.title);
     expect(responseData.content).toEqual(testData.content);
-    expect(responseData.slug).toEqual(testData.slug);
 
     return;
   });

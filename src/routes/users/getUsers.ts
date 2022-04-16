@@ -5,7 +5,6 @@ const router = express.Router();
 // Find user by ID
 router.get('/', async (req: Request, res: Response) => {
   try {
-    //const { id } = req.params;
     const { skip, take } = req.query;
 
     const users = await User.find({
@@ -15,7 +14,7 @@ router.get('/', async (req: Request, res: Response) => {
 
     if (!users) {
       return res.json({
-        message: 'no user found'
+        message: 'no users found'
       });
     }
 

@@ -1,0 +1,47 @@
+A user and a post with the given IDs are required by the tests.
+
+
+User
+{
+        "id": "05af4060-059e-418d-bfe9-0ef18e855471",
+        "firstName": "Mariseee",
+        "middleName": "",
+        "lastName": "MaasikassADss",
+        "mobile": "234234274",
+        "email": "mariseee@test.ee",
+        "lastLogin": "2022-04-04T19:33:31.000Z",
+        "intro": null,
+        "profile": null,
+        "deletedAt": null,
+        "createdAt": "2022-04-04T19:33:31.056Z",
+        "updatedAt": "2022-04-04T19:33:31.056Z"
+    }
+
+
+Post
+{
+        "id": "df2c15c1-7c3c-428d-86db-bad0a73741e9",
+        "title": "Story",
+        "authorId": "05af4060-059e-418d-bfe9-0ef18e855471",
+        "parentId": "missing parentId",
+        "metaTitle": "Story",
+        "summary": "There we have it agai234234n",
+        "published": false,
+        "content": "Contrary to popular belief, Lorem Ipsum is not simply randoassical Latin literatit over 2000 years old423423432.",
+        "createdAt": "2022-04-16T06:44:50.285Z",
+        "updatedAt": "2022-04-16T06:44:50.285Z",
+        "__author__": {
+            "id": "05af4060-059e-418d-bfe9-0ef18e855471",
+            "firstName": "Mariseee",
+            "middleName": "",
+            "lastName": "MaasikassADss",
+            "mobile": "234234274",
+            "email": "mariseee@test.ee",
+            "lastLogin": "2022-04-04T19:33:31.000Z",
+            "intro": null,
+            "profile": null,
+            "deletedAt": null,
+            "createdAt": "2022-04-04T19:33:31.056Z",
+            "updatedAt": "2022-04-04T19:33:31.056Z"
+        }
+    }

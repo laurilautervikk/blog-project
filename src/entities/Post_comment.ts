@@ -18,7 +18,7 @@ export default class Post_comment extends BaseEntity {
   @Column()
   postId!: string;
 
-  @Column()
+  @Column('varchar', { default: 'missing parentId' })
   parentId!: string;
 
   @Column('varchar', { length: 100 })

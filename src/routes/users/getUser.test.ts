@@ -1,39 +1,36 @@
 import axios from 'axios';
-const endpoint = 'http://localhost:3000/categories/';
+const endpoint = 'http://localhost:3000/users/';
 
-describe('get category by ID', () => {
+describe('get user by ID', () => {
   let newId: string;
 
   beforeAll(async () => {
-    //create a dummy category first
+    //create a dummy entry first
     const testData = {
-      title: 'Title getcategory test',
-      slug: 'Summary getcategory test',
-      content: 'Content getcategory test'
+      firstName: 'Testa',
+      lastName: 'Usaar',
+      mobile: '+377789789789',
+      email: 'test@user.com'
     };
-
     const response = await axios.post(endpoint, testData, {
       headers: {
         'Content-Type': 'application/json'
       }
     });
-
     const responseData = response.data;
-
-    //get the id from dummy categorys response
     newId = responseData.id;
   });
 
-  it('should return category by ID', async () => {
+  it('should return user by ID', async () => {
     const response = await axios.get(endpoint + newId);
     expect(response.status).toBe(200);
-    expect(response?.data?.title).toEqual('Title getcategory test');
+    expect(response?.data?.firstName).toEqual('Testa');
   });
 
   it('Should return error for non existing ID', async () => {
     const response = await axios.get(endpoint + 'nothing');
     const result = response.data;
-    expect(result?.message).toEqual('no category found with ID: nothing');
+    expect(result?.message).toEqual('no entry found with ID: nothing');
     return;
   });
 

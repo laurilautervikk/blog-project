@@ -1,17 +1,17 @@
 import express, { Request, Response } from 'express';
-import Category from '../../entities/Category';
+import Tag from '../../entities/Tag';
 const router = express.Router();
 
-// Find user by ID
+// Find tag by ID
 router.get('/', async (req: Request, res: Response) => {
   try {
     const { id, skip, take } = req.query;
 
-    const categoriesQuery = await Category.createQueryBuilder('category')
+    const tagsQuery = await Tag.createQueryBuilder('tag')
       .limit(Number.isSafeInteger(take) ? Number.parseInt(take as string) : 20)
       .offset(Number.isSafeInteger(skip) ? Number.parseInt(skip as string) : 0);
 
-    const categories = await categoriesQuery.getMany();
+    const categories = await tagsQuery.getMany();
 
     return res.json(categories);
   } catch (error) {

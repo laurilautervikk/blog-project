@@ -1,65 +1,65 @@
 import express, { Request, Response } from 'express';
+import Post_comment from '../../entities/Post_comment';
 import Post from '../../entities/Post';
 import { v4 as uuidV4 } from 'uuid';
-import User from '../../entities/User';
 const router = express.Router();
 
-interface PostInput {
-  authorId: string;
+interface CommentInput {
+  postId: string;
+  parentId: string;
   title: string;
-  summary: string;
   content: string;
 }
 
 router.post('/', async (req: Request, res: Response) => {
   try {
-    const { authorId, title, summary, content } = req.body as PostInput;
+    const { postId, parentId, title, content } = req.body as CommentInput;
     console.log('request', req.body);
 
-    // validation näide
-    if (!authorId || !title || !summary || !content) {
+    // validation
+    if (!postId || !title || !content) {
       //if (!authorId) {
       return res.json({ error: 'all fields must be filled' });
     }
-    // TODO: valideeri sijsonid (nt. sanitize ja validate)
 
-    const user = await User.findOne({ id: authorId });
-    if (!user) {
-      return res.json({ message: 'No such user found' });
+    const post = await Post.findOne({ id: postId });
+    if (!post) {
+      return res.json({ message: 'Cant comment a non existent post' });
     }
 
-    const post = Post.create({
+    const comment = Post_comment.create({
       id: uuidV4(),
-      authorId: user.id,
+      postId: post.id,
+      parentId: parentId,
       title: title,
-      metaTitle: title.replace(/\s/g, '-'),
-      summary: summary,
       content: content,
       published: false
     });
-    console.log(post);
-    const newPost = await post.save();
-    if (!newPost) {
+
+    console.log(comment);
+
+    const newComment = await comment.save();
+    if (!newComment) {
       // TODO: parem logger vahevara kasutusele võtta
-      console.log({ error: 'unable to save post' });
+      console.log({ error: 'unable to save Comment' });
       // TODO: error handling vahevara luua (ühtlustada errori kuvamine)
       return res.json({
-        error: 'Unable to create new post',
+        error: 'Unable to create new Comment',
         message: 'typeorm save'
       });
     }
 
-    return res.json(newPost);
+    return res.json(newComment);
   } catch (error) {
     console.log('Unknown databse error');
     if (error instanceof Error) {
       return res.json({
-        error: 'Unable to create new post',
+        error: 'Unable to create new omment',
         message: error.message
       });
     }
     return res.json({
-      error: 'Unable to create new post',
+      error: 'Unable to create new Comment',
       message: 'Unknown error'
     });
   }

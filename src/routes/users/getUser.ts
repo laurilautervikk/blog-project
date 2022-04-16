@@ -11,7 +11,7 @@ router.get('/:id', async (req: Request, res: Response) => {
 
     if (!user) {
       return res.json({
-        message: 'no user found with given ID'
+        message: 'no entry found with ID: ' + id
       });
     }
 
